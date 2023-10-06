@@ -3,9 +3,8 @@ import Switch from 'react-switch';
 import Logo from '../../assets/celio.png';
 
 import { useNavigate } from "react-router-dom";
+import { Container, DeveloppedBy } from "../../styles/GlobalStyle";
 import {
-    Container,
-    DeveloppedBy,
     Form,
     FormCard,
     SwitchContainer

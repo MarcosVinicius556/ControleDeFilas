@@ -1,38 +1,4 @@
-import { styled, keyframes } from "styled-components";
-import lab_back_image from '../../assets/lab_background.jpg';
-
-const reveal = keyframes`
-    from{
-        opacity: 0;
-    }
-    to{
-        opacity: 1;
-    }
-`;
-
-export const Container = styled.div`
-    position: fixed;
-    height: 100vh;
-    width: 100%;
-
-    background: url(${lab_back_image});
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    overflow-y: scroll;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    /* animation: ${reveal} .9s ease-in-out; */
-
-    box-shadow: 0px 0px 132px 38px rgba(0,0,0,0.75) inset;
-    -webkit-box-shadow: 0px 0px 132px 38px rgba(0,0,0,0.75) inset;
-    -moz-box-shadow: 0px 0px 132px 38px rgba(0,0,0,0.75) inset;
-    
-`;
+import { styled } from "styled-components";
 
 export const FormCard = styled.div`
     margin: auto;
@@ -66,20 +32,6 @@ export const FormCard = styled.div`
 
 `;
 
-export const DeveloppedBy = styled.span`
-    position: absolute;
-    bottom: 1em;
-    color: #323232;
-    font-size: 22px;
-    letter-spacing: 1px;
-    font-weight: 600;
-    text-align: center;
-
-    @media screen and (max-width: 600px) {
-        font-size: 12px;
-    }
-`;
-
 export const SwitchContainer = styled.div`
     
     display: flex;
@@ -108,7 +60,7 @@ export const SwitchContainer = styled.div`
 `;
 
 export const Form = styled.form`
-
+    flex: 1;
     padding: 1.5em;
     width: 80%;
     max-height: 350px;
