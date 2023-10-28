@@ -1,15 +1,14 @@
-import { BaseButton } from "../../styles/GlobalStyle"
+import { BaseButton } from "../../styles/GlobalStyle";
+import { memo } from 'react';
 
-function ShowButton() {
+export const ShowButton = memo(() => {
   return (
     <BaseButton 
-        backgroundColor="#93b4f3"
+        backgroundColor="#f18c8c"
         textColor="#555454"
-        backgroundHover="#738ec0"
+        backgroundHover="#996058"
         textHover="#fff">
-        Visualizar
+        Remover
     </BaseButton>
   )
-}
-
-export default ShowButton
+})

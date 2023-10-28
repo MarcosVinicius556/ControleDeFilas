@@ -1,6 +1,7 @@
 import { BaseButton } from "../../styles/GlobalStyle"
+import { memo } from "react";
 
-function RemoveButton() {
+export const RemoveButton = memo(() => {
   return (
     <BaseButton 
         backgroundColor="#f18c8c"
@@ -10,6 +11,4 @@ function RemoveButton() {
         Remover
     </BaseButton>
   )
-}
-
-export default RemoveButton;
+})

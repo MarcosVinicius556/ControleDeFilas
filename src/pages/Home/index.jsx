@@ -3,6 +3,7 @@ import Logo from '../../assets/celio.png';
 import { Card, ButtonNorml, ButtonPref } from "./Home.style";
 import { BiArrowBack } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
+import ConfigButton from "../../components/ConfigButton";
 
 function Home() {
 
@@ -27,6 +28,7 @@ function Home() {
         </span>
         <DeveloppedBy>Desenvolvido por Infoarte Software LTDA.</DeveloppedBy>
       </Card>
+      <ConfigButton />
     </Container>
   )
 }

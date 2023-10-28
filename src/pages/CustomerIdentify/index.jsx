@@ -9,6 +9,7 @@ import {
     SwitchContainer,
     SwitchButton
 } from './CustomerIdentify.style';
+import ConfigButton from "../../components/ConfigButton";
 
 function CustomerIdentify() {
 
@@ -58,6 +59,7 @@ function CustomerIdentify() {
                     </Form>
                     <DeveloppedBy>Desenvolvido por Infoarte Software LTDA.</DeveloppedBy>
                 </FormCard>
+                <ConfigButton />
         </Container>
     )
 }

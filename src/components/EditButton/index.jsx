@@ -1,6 +1,7 @@
+import { memo } from "react"
 import { BaseButton } from "../../styles/GlobalStyle"
 
-function EditButton() {
+export const EditButton = memo(() => {
   return (
     <BaseButton 
         backgroundColor="#e9f393"
@@ -10,6 +11,4 @@ function EditButton() {
         Editar
     </BaseButton>
   )
-}
-
-export default EditButton
+}) 
