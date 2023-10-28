@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Switch from 'react-switch';
 import Logo from '../../assets/celio.png';
 
 import { useNavigate } from "react-router-dom";
@@ -14,10 +13,14 @@ function CustomerIdentify() {
 
     const navigate = useNavigate();
 
-    const[isPJ, setIsPJ] = useState(false);
+    // 0 === CPF | 1 === NOME
+    const[infNome, setInfNome] = useState(false);
 
-    const handleSwitch = () => {
-        setIsPJ(!isPJ);
+    const handleSwitch = (tipo) => {
+        if(tipo === 0)
+            setInfNome(false);
+        else
+            setInfNome(true);
     }
 
     const handleSubmit = (e) => {
@@ -32,20 +35,14 @@ function CustomerIdentify() {
                 <FormCard>
                     <img src={Logo} alt="Logo da empresa" />
                     <SwitchContainer>
-                        <Switch 
-                            onChange={handleSwitch} 
-                            checked={isPJ} 
-                            checkedIcon={false} 
-                            uncheckedIcon={false} 
-                            onColor="#76fa97"
-                            offColor="#7db8fc"/>
-                            <label>{ isPJ ? 'Pessoa Jurídica' : 'Pessoa Física' }</label>
+                        <button onClick={() => handleSwitch(0)}>Informar CPF</button>
+                        <button onClick={() => handleSwitch(1)}>Informar Nome</button>
                     </SwitchContainer>
                     <Form onSubmit={handleSubmit}>
-                        {isPJ 
+                        {infNome 
                             ? (
                                 <span>
-                                    <label>Informe seu CNPJ</label>
+                                    <label>Informe seu Nome</label>
                                     <input type="text" />
                                 </span>
                             )
