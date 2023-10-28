@@ -6,7 +6,8 @@ import { Container, DeveloppedBy } from "../../styles/GlobalStyle";
 import {
     Form,
     FormCard,
-    SwitchContainer
+    SwitchContainer,
+    SwitchButton
 } from './CustomerIdentify.style';
 
 function CustomerIdentify() {
@@ -35,8 +36,8 @@ function CustomerIdentify() {
                 <FormCard>
                     <img src={Logo} alt="Logo da empresa" />
                     <SwitchContainer>
-                        <button onClick={() => handleSwitch(0)}>Informar CPF</button>
-                        <button onClick={() => handleSwitch(1)}>Informar Nome</button>
+                        <SwitchButton active={!infNome ? 1 : 0} onClick={() => handleSwitch(0)}>Informar CPF</SwitchButton>
+                        <SwitchButton active={infNome ? 1 : 0} onClick={() => handleSwitch(1)}>Informar Nome</SwitchButton>
                     </SwitchContainer>
                     <Form onSubmit={handleSubmit}>
                         {infNome 

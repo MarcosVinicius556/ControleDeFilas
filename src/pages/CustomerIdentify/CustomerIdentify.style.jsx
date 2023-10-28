@@ -33,7 +33,6 @@ export const FormCard = styled.div`
 `;
 
 export const SwitchContainer = styled.div`
-    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,41 +40,46 @@ export const SwitchContainer = styled.div`
     width: 50%;
     margin-top: 5em;
 
-    & button {
-        height: 60px;
-        width: 170px;
-        border-radius: 10px 0px 0px 10px;
-        border: 1px solid transparent;
-        cursor: pointer;
-        font-size: 18px;
-        background: #64a2e9;
-        color: #474747;
-        font-weight: bold;
-        transition: all .5s ease-in-out;
-
-        &:nth-child(1){
-            border-right: none;
-        }
-
-        & + button {
-            border-radius: 0px 10px 10px 0px;
-
-        }
-
-        &:hover {
-            background: #70a9eb;
-            color: #fff;
-        }
-    }
-
-    &:
-
     @media screen and (max-width: 600px) {
         & label {
             font-size: 18px;
         }
     }
     
+`;
+
+export const SwitchButton = styled.button`
+
+            height: 60px;
+            width: 170px;
+            border-radius: 10px 0px 0px 10px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 18px;
+            background: #64a2e9;
+            color: #474747;
+            font-weight: bold;
+            transition: all .3s ease-in-out;
+            ${({active}) => active === 1 && ((
+                
+                `background: #70a9eb;
+                 color: #fff;`
+            ))}
+
+            &:nth-child(1){
+                border-right: none;
+            }
+
+            & + button {
+                border-radius: 0px 10px 10px 0px;
+
+            }
+
+            &:hover {
+                background: #70a9eb;
+                color: #fff;
+            }
+        
 `;
 
 export const Form = styled.form`
