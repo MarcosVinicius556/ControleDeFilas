@@ -1,17 +1,21 @@
 /* eslint-disable react-refresh/only-export-components */
 import {
     all,
+    call,
     put,
     takeLatest
 } from 'redux-saga/effects';
 
 import {
     fetchAvailableQueueSuccess,
+    fetchAvailableQueueFailure,
     fetchNormalPassFailure,
     fetchNormalPassSuccess,
     fetchPreferentialPassFailure,
     fetchPreferentialPassSuccess
 } from './slice';
+
+import axios from 'axios';
 
 
 /**
@@ -21,15 +25,19 @@ import {
  */
 function* fetchNormalPass(){
    try{
-        yield put(fetchNormalPassSuccess('Olá mundo, deu certo!'));
+        const response = yield call(axios.get());
+
+        yield put(fetchNormalPassSuccess(response.data))
     } catch(error) {
-        yield put(fetchNormalPassFailure('Olá mundo, deu errado!'));
+        yield put(fetchNormalPassFailure(error));
     }
 }
 
 function* fetchPreferentialPass() {
     try{
-        yield put(fetchPreferentialPassSuccess('Olá mundo, deu certo!'));
+        const response = yield call(axios.get());
+
+        yield put(fetchPreferentialPassSuccess(response.data))
     } catch(error) {
         yield put(fetchPreferentialPassFailure('Olá mundo, deu errado!'));
     }
@@ -37,26 +45,11 @@ function* fetchPreferentialPass() {
 
 function* fetchAvailableQueue() {
     try {
-        /**
-         * Substituir por requisição da API
-         */
-        let data = [
-            {
-                id: 1,
-                description: 'Fila Matriz'
-            },
-            {
-                id: 2,
-                description: 'Fila Centro'
-            },
-            {
-                id: 3,
-                description: 'Fila Blumenau'
-            }
-        ];
-        yield put(fetchAvailableQueueSuccess(data));
+        const response = yield call(axios.get());
+
+        yield put(fetchAvailableQueueSuccess(response.data))
     } catch (error) {
-        yield put(fetchAvailableQueueSuccess('Olá mundo, deu errado!'));
+        yield put(fetchAvailableQueueFailure(error));
     }
 }
 

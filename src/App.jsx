@@ -11,6 +11,6 @@ function App() {
         <RoutesApp />
     </BrowserRouter>
   )
-}
+} 
 
 export default App

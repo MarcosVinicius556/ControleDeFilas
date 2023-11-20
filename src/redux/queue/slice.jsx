@@ -74,8 +74,7 @@ export const queueSlice = createSlice({
          */
         loadApplicationConfig: (state) => {
             let encryptedData = localStorage.getItem('@infoarteData');
-            let configData;
-                configData = encryptedData ? decryptData(encryptedData) : {url: '', port: ''};
+            let configData = encryptedData ? decryptData(encryptedData) : {url: '', port: ''};
             
             return{
                 ...state,
@@ -102,6 +101,7 @@ export const queueSlice = createSlice({
             }
         },
         fetchAvailableQueueFailure: (state, action) => {
+            toast.failure('Houve um erro ao buscar as filas dinsponíveis para uso. Erro: ' + action.payload);
             return{
                 ...state,
                 loadingConfig: false
@@ -114,8 +114,7 @@ export const queueSlice = createSlice({
          * @param {*} action 
          * @returns 
          */
-        fetchNormalPass: (state, action) => {
-            
+        fetchNormalPass: (state) => {
             return {
                 ...state,
                 loadingNormal: true
@@ -124,8 +123,9 @@ export const queueSlice = createSlice({
         },
         fetchNormalPassSuccess: (state, action) => {
 
-            toast.success('Realizando impressão da senha!')
-
+            toast.success('Realizando impressão da senha!');
+            alert('Recebeu os dados para impressão da fila normal...');
+            console.log(action.payload);
             return {
                 ...state,
                 loadingNormal: false
@@ -133,7 +133,7 @@ export const queueSlice = createSlice({
         },
         fetchNormalPassFailure: (state, action) => {
 
-            toast.failure('Não foi possível realizar a comunicação com o servidor!')
+            toast.failure('Não foi possível realizar a comunicação com o servidor! Erro: ' + action.payload);
             
             return {
                 ...state,
@@ -147,8 +147,7 @@ export const queueSlice = createSlice({
          * @param {*} action 
          * @returns 
          */
-        fetchPreferentialPass: (state, action) => {
-            
+        fetchPreferentialPass: (state) => {
             return {
                 ...state,
                 loadingPref: true
@@ -156,7 +155,9 @@ export const queueSlice = createSlice({
         },
         fetchPreferentialPassSuccess: (state, action) => {
             
-            toast.success('Realizando impressão da senha preferêncial!')
+            toast.success('Realizando impressão da senha preferêncial!');
+            alert('Recebeu os dados para impressão da fila preferencial...');
+            console.log(action.payload);
 
             return {
                 ...state,
@@ -165,7 +166,7 @@ export const queueSlice = createSlice({
         },
         fetchPreferentialPassFailure: (state, action) => {
 
-            toast.failure('Não foi possível realizar a comunicação com o servidor!')
+            toast.failure('Não foi possível realizar a comunicação com o servidor! Erro: ' + action.payload);
         
             return {
                 ...state,
