@@ -89,13 +89,24 @@ export const Form = styled.form`
             outline: none;
 
         }
-        
+
         input:nth-child(4) {
             width: 40%;
         }
-        
 
-        margin-bottom: 1em;
+        & select {
+            width: 100%;
+            height: 50%;
+            padding-left: .5em;
+            font-size: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            margin-bottom: 1em;
+        }
+
         
     }
     

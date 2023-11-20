@@ -1,16 +1,18 @@
 /* eslint-disable react-refresh/only-export-components */
 import {
     all,
-    call,
     put,
     takeLatest
-    } from 'redux-saga/effects';
+} from 'redux-saga/effects';
 
-import { fetchNormalPassSuccess, fetchNormalPassFailure,
-         fetchPreferentialPassSuccess, fetchPreferentialPassFailure
-        } from './slice';   
+import {
+    fetchAvailableQueueSuccess,
+    fetchNormalPassFailure,
+    fetchNormalPassSuccess,
+    fetchPreferentialPassFailure,
+    fetchPreferentialPassSuccess
+} from './slice';
 
-import axios from 'axios';
 
 /**
  * Quando uma requisição for feita, a store chamará por "de trás dos panos" esta função,
@@ -18,7 +20,6 @@ import axios from 'axios';
  * para realizar o que esteja definido para a aplicação....
  */
 function* fetchNormalPass(){
-   yield alert('Chamou o SAGA da fila para senha normal');
    try{
         yield put(fetchNormalPassSuccess('Olá mundo, deu certo!'));
     } catch(error) {
@@ -27,11 +28,35 @@ function* fetchNormalPass(){
 }
 
 function* fetchPreferentialPass() {
-    yield alert('Chamou o SAGA da fila para senha preferêncial');
     try{
         yield put(fetchPreferentialPassSuccess('Olá mundo, deu certo!'));
     } catch(error) {
         yield put(fetchPreferentialPassFailure('Olá mundo, deu errado!'));
+    }
+}
+
+function* fetchAvailableQueue() {
+    try {
+        /**
+         * Substituir por requisição da API
+         */
+        let data = [
+            {
+                id: 1,
+                description: 'Fila Matriz'
+            },
+            {
+                id: 2,
+                description: 'Fila Centro'
+            },
+            {
+                id: 3,
+                description: 'Fila Blumenau'
+            }
+        ];
+        yield put(fetchAvailableQueueSuccess(data));
+    } catch (error) {
+        yield put(fetchAvailableQueueSuccess('Olá mundo, deu errado!'));
     }
 }
 
@@ -40,6 +65,7 @@ function* fetchPreferentialPass() {
  */
 export default all([
     takeLatest('queue/fetchNormalPass', fetchNormalPass),
-    takeLatest('queue/fetchPreferentialPass', fetchPreferentialPass)
+    takeLatest('queue/fetchPreferentialPass', fetchPreferentialPass),
+    takeLatest('queue/fetchAvailableQueue', fetchAvailableQueue),
 ]);
    

@@ -6,6 +6,7 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 import CryptoJS from "crypto-js";
+import { toast } from 'react-toastify';
 
 const secretPass = 'teste';
 
@@ -18,14 +19,22 @@ const initialAppState = {
         identifier: ''
     },
     applicationConfigData: null,
+    availableQueue: [],
     loadingNormal: false,
     loadingPref: false,
+    loadingConfig: false
 }
 
 export const queueSlice = createSlice({
     name: 'queue',
     initialState: initialAppState,
     reducers: {
+        /**
+         * @apiNote Monta o objeto do cliente para enviar para o servidor e criar um registro na filaAtendimento
+         * @param {*} state 
+         * @param {*} action 
+         * @returns 
+         */
         createCustomerData: (state, action) => {
             let customerData = {
                 identifierType: action.payload.identifierType,
@@ -37,32 +46,76 @@ export const queueSlice = createSlice({
                 customer: customerData
             }
         },
+        /**
+         * @apiNote Salva a configuração em formato JSON e criptografada no localStorage da aplicação
+         * @param {*} state 
+         * @param {*} action 
+         * @returns 
+         */
         createApplicationConfig: (state, action) => {
             let data = {
                 url: action.payload.url,
                 port: action.payload.port,
+                queueId: action.payload.queueId
             }
 
             let crypt = encryptData(data);
             localStorage.setItem('@infoarteData', crypt);
-            console.log(data);
+            toast.success('Configurações salvas com sucesso!');
             return{
                 ...state,
                 applicationConfigData: data
             }
         },
+        /**
+         * @apiNote Busca na memória se tem alguma configuração salva....
+         * @param {*} state 
+         * @returns 
+         */
         loadApplicationConfig: (state) => {
             let encryptedData = localStorage.getItem('@infoarteData');
-            let configData = decryptData(encryptedData);
-
+            let configData;
+                configData = encryptedData ? decryptData(encryptedData) : {url: '', port: ''};
+            
             return{
                 ...state,
                 applicationConfigData: configData
             }
         },
+        /**
+         * @apiNote Efetua uma requisição para a API para verificar as Filas 
+         *          que estão disponíveis para serem utilizadas nesta aplicação
+         * @param {*} state 
+         * @returns 
+         */
+        fetchAvailableQueue: (state) => {
+            return {
+                ...state,
+                loadingConfig: true
+            }
+        },
+        fetchAvailableQueueSuccess: (state, action) => {
+            return {
+                ...state,
+                loadingConfig: false,
+                availableQueue: action.payload
+            }
+        },
+        fetchAvailableQueueFailure: (state, action) => {
+            return{
+                ...state,
+                loadingConfig: false
+            }
+        },
+        /**
+         * @apiNote Envia os dados do cliente atual, para gerar um atendimento 
+         *          pendente no banco, e também retornar o número para impressão
+         * @param {*} state 
+         * @param {*} action 
+         * @returns 
+         */
         fetchNormalPass: (state, action) => {
-            console.log(state);
-            console.log(action);
+            
             return {
                 ...state,
                 loadingNormal: true
@@ -70,41 +123,50 @@ export const queueSlice = createSlice({
             
         },
         fetchNormalPassSuccess: (state, action) => {
-            console.log(state.customer)
-            console.log(state);
-            console.log(action);
+
+            toast.success('Realizando impressão da senha!')
+
             return {
                 ...state,
                 loadingNormal: false
             }
         },
         fetchNormalPassFailure: (state, action) => {
-            console.log(state);
-            console.log(action);
+
+            toast.failure('Não foi possível realizar a comunicação com o servidor!')
+            
             return {
                 ...state,
                 loadingNormal: false
             }
         },
+        /**
+         * @apiNote Envia os dados do cliente atual (PREFERENCIAL), para gerar um atendimento 
+         *          pendente no banco, e também retornar o número para impressão
+         * @param {*} state 
+         * @param {*} action 
+         * @returns 
+         */
         fetchPreferentialPass: (state, action) => {
-            console.log(state);
-            console.log(action);
+            
             return {
                 ...state,
                 loadingPref: true
             }
         },
         fetchPreferentialPassSuccess: (state, action) => {
-            console.log(state);
-            console.log(action);
+            
+            toast.success('Realizando impressão da senha preferêncial!')
+
             return {
                 ...state,
                 loadingPref: false
             }
         },
         fetchPreferentialPassFailure: (state, action) => {
-            console.log(state);
-            console.log(action);
+
+            toast.failure('Não foi possível realizar a comunicação com o servidor!')
+        
             return {
                 ...state,
                 loadingPref: false
@@ -142,6 +204,9 @@ export const {
     createCustomerData,
     createApplicationConfig,
     loadApplicationConfig,
+    fetchAvailableQueue,
+    fetchAvailableQueueSuccess,
+    fetchAvailableQueueFailure,
     fetchNormalPass,
     fetchNormalPassSuccess,
     fetchNormalPassFailure,
