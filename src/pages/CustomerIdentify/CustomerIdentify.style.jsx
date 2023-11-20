@@ -60,7 +60,7 @@ export const SwitchButton = styled.button`
             color: #474747;
             font-weight: bold;
             transition: all .3s ease-in-out;
-            ${({active}) => active === 1 && ((
+            ${({active}) => active === 2 && ((
                 
                 `background: #70a9eb;
                  color: #fff;`
@@ -116,12 +116,13 @@ export const Form = styled.form`
             width: 100%;
             height: 50%;
             padding-left: .5em;
-            font-size: 48px;
+            font-size: 28px;
             font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
             border: none;
             border-radius: 5px;
             outline: none;
+            text-align: center;
         }
     }
     

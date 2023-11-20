@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, memo, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Logo from '../../assets/celio.png';
 
-import { useNavigate } from "react-router-dom";
 import { Container, DeveloppedBy } from "../../styles/GlobalStyle";
 import {
     Form,
@@ -9,59 +9,84 @@ import {
     SwitchContainer,
     SwitchButton
 } from './CustomerIdentify.style';
+import { IMaskInput } from "react-imask";
 import ConfigButton from "../../components/ConfigButton";
 
-function CustomerIdentify() {
+import { createCustomerData } from "../../redux/queue/slice";
+import { useDispatch } from "react-redux";
 
-    const navigate = useNavigate();
+const CustomerIdentify = memo(() => {
 
-    // 0 === CPF | 1 === NOME
-    const[infNome, setInfNome] = useState(false);
+        const navigate = useNavigate();
 
-    const handleSwitch = (tipo) => {
-        if(tipo === 0)
-            setInfNome(false);
-        else
-            setInfNome(true);
+        const dispatch = useDispatch();
+
+        const identifierRef = useRef("");
+
+        // 1 === CPF | 2 === NOME
+        const[infNome, setInfNome] = useState(false);
+
+        const handleSwitch = (tipo) => {
+            if(tipo === 0)
+                setInfNome(false);
+            else
+                setInfNome(true);
+        }
+
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            
+            dispatch(createCustomerData({ 
+                identifierType: !infNome ? 2 : 1,
+                identifier: !infNome ? identifierRef.current?.maskRef?.value : identifierRef.current?.element.value,
+            }));
+
+            navigate('/queue')
+        }
+
+        return (
+            <Container>
+
+                    <FormCard>
+                        <img src={Logo} alt="Logo da empresa" />
+                        <SwitchContainer>
+                            <SwitchButton active={!infNome ? 2 : 1} onClick={() => handleSwitch(0)}>Informar CPF</SwitchButton>
+                            <SwitchButton active={infNome ? 2 : 1} onClick={() => handleSwitch(1)}>Informar Nome</SwitchButton>
+                        </SwitchContainer>
+                        <Form onSubmit={handleSubmit}>
+                            {infNome 
+                                ? 
+                                (
+                                    <span>
+                                        <label>Informe seu Nome</label>
+                                        <IMaskInput 
+                                            ref={identifierRef}
+                                            type="text"
+                                            mask=""
+                                            placeholder="Digite seu nome..." />
+                                    </span>
+                                )
+                                : (
+                                    <span>
+                                        <label>Informe seu CPF</label>
+                                        <IMaskInput 
+                                            ref={identifierRef}
+                                            type="text"
+                                            mask="000.000.000-00" 
+                                            placeholder="Digite seu CPF..."/>
+                                    </span>
+                                )
+                            }
+                            <input type="submit" value="Entrar" />
+                        </Form>
+                        <DeveloppedBy>Desenvolvido por Infoarte Software LTDA.</DeveloppedBy>
+                    </FormCard>
+                    <ConfigButton />
+            </Container>
+        )
     }
+)
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        navigate("/home");
-    }
-
-    return (
-        <Container>
-
-                <FormCard>
-                    <img src={Logo} alt="Logo da empresa" />
-                    <SwitchContainer>
-                        <SwitchButton active={!infNome ? 1 : 0} onClick={() => handleSwitch(0)}>Informar CPF</SwitchButton>
-                        <SwitchButton active={infNome ? 1 : 0} onClick={() => handleSwitch(1)}>Informar Nome</SwitchButton>
-                    </SwitchContainer>
-                    <Form onSubmit={handleSubmit}>
-                        {infNome 
-                            ? (
-                                <span>
-                                    <label>Informe seu Nome</label>
-                                    <input type="text" />
-                                </span>
-                            )
-                            : (
-                                <span>
-                                    <label>Informe seu CPF</label>
-                                    <input type="text" />
-                                </span>
-                            )
-                        }
-                        <input type="submit" value="Entrar" />
-                    </Form>
-                    <DeveloppedBy>Desenvolvido por Infoarte Software LTDA.</DeveloppedBy>
-                </FormCard>
-                <ConfigButton />
-        </Container>
-    )
-}
+CustomerIdentify.displayName = "CustomerIdentify";
 
 export default CustomerIdentify;

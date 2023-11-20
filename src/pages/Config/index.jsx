@@ -1,18 +1,14 @@
-import { Container, DeveloppedBy } from "../../styles/GlobalStyle";
-import {
-    Form,
-    FormCard
-} from './Config.style';
-import Logo from '../../assets/celio.png';
+import { memo, useEffect, useState } from 'react';
 import { BiArrowBack } from 'react-icons/bi';
-import { useEffect, useContext, memo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ConfigContext } from "../../context/ConfigContext";
+import Logo from '../../assets/celio.png';
+import { Container, DeveloppedBy } from "../../styles/GlobalStyle";
+import { Form, FormCard
+} from './Config.style';
+// import { ConfigContext } from "../../context/ConfigContext";
 
+// eslint-disable-next-line react/display-name
 export const Config =  memo(() => {
-    const{ value: reducer } = useContext(ConfigContext);
-    const[state, dispatch] = reducer;
-
     const [serverUrl, setServerUrl] = useState('');
     const [serverPort, setServerPort] = useState(''); 
 
@@ -22,39 +18,34 @@ export const Config =  memo(() => {
         e.preventDefault();
     
         navigate('/');
-      }
+    }
 
-    /**
-     * Executa somente ao iniciar a aplicação
-     */
     useEffect(() => {
-        const loadConfigData = () => {
+        // const loadConfigData = () => {
 
-            /**
-             * Busca as configurações existentes no localStorage do usuário
-             */
-            setServerUrl(state.serverUrl);
-            setServerPort(state.serverPort);
+        //     /**
+        //      * Busca as configurações existentes no localStorage do usuário
+        //      */
+        //     setServerUrl(state.serverUrl);
+        //     setServerPort(state.serverPort);
 
-        }
+        // }
 
-        loadConfigData();
+        // loadConfigData();
 
-        console.log(state);
-
-
+        // console.log(state);
     }, []);
 
     const handleSubmit = (e) => {
-            e.preventDefault();
-            let configData = {
-                url: serverUrl,
-                port: serverPort
-            }
+        console.log(e);
+        // e.preventDefault();
+        // let configData = {
+        //     url: serverUrl,
+        //     port: serverPort
+        // }
 
-            dispatch({ type:'saveConfig', payload:configData })
+        // dispatch({ type:'saveConfig', payload:configData })
     };
-
     return (
         <Container>
             <FormCard>
@@ -78,6 +69,7 @@ export const Config =  memo(() => {
             </FormCard>
         </Container>
     )
-})
-
+});
 export default Config
+
+

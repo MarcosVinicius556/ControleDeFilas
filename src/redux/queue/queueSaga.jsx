@@ -18,11 +18,21 @@ import axios from 'axios';
  * para realizar o que esteja definido para a aplicação....
  */
 function* fetchNormalPass(){
-
+   yield alert('Chamou o SAGA da fila para senha normal');
+   try{
+        yield put(fetchNormalPassSuccess('Olá mundo, deu certo!'));
+    } catch(error) {
+        yield put(fetchNormalPassFailure('Olá mundo, deu errado!'));
+    }
 }
 
 function* fetchPreferentialPass() {
-
+    yield alert('Chamou o SAGA da fila para senha preferêncial');
+    try{
+        yield put(fetchPreferentialPassSuccess('Olá mundo, deu certo!'));
+    } catch(error) {
+        yield put(fetchPreferentialPassFailure('Olá mundo, deu errado!'));
+    }
 }
 
 /**

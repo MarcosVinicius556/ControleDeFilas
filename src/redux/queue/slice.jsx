@@ -17,13 +17,25 @@ const initialAppState = {
         indetifierType: '',
         identifier: ''
     },
-    applicationConfigData: null
+    applicationConfigData: null,
+    loading: false
 }
 
 export const queueSlice = createSlice({
     name: 'queue',
     initialState: initialAppState,
     reducers: {
+        createCustomerData: (state, action) => {
+            let customerData = {
+                identifierType: action.payload.identifierType,
+                identifier: action.payload.identifier
+            }
+            
+            return {
+                ...state,
+                customer: customerData
+            }
+        },
         createApplicationConfig: (state, action) => {
             let data = {
                 url: action.payload.url,
@@ -32,36 +44,70 @@ export const queueSlice = createSlice({
 
             let crypt = encryptData(data);
             localStorage.setItem('@infoarteData', crypt);
-            state.applicationConfigData = data;
-            
+            console.log(data);
             return{
                 ...state,
+                applicationConfigData: data
             }
         },
         loadApplicationConfig: (state) => {
             let encryptedData = localStorage.getItem('@infoarteData');
             let configData = decryptData(encryptedData);
 
-            state = configData;
             return{
-                ...state
+                ...state,
+                applicationConfigData: configData
             }
         },
-        fetchNormalPassSuccess: (state, action) => {
+        fetchNormalPass: (state, action) => {
             console.log(state);
             console.log(action);
+            return {
+                ...state,
+                loading: true
+            }
+            
+        },
+        fetchNormalPassSuccess: (state, action) => {
+            console.log(state.customer)
+            console.log(state);
+            console.log(action);
+            return {
+                ...state,
+                loading: false
+            }
         },
         fetchNormalPassFailure: (state, action) => {
             console.log(state);
             console.log(action);
+            return {
+                ...state,
+                loading: false
+            }
+        },
+        fetchPreferentialPass: (state, action) => {
+            console.log(state);
+            console.log(action);
+            return {
+                ...state,
+                loading: true
+            }
         },
         fetchPreferentialPassSuccess: (state, action) => {
             console.log(state);
             console.log(action);
+            return {
+                ...state,
+                loading: false
+            }
         },
         fetchPreferentialPassFailure: (state, action) => {
             console.log(state);
             console.log(action);
+            return {
+                ...state,
+                loading: false
+            }
         }
     }
 });
@@ -92,10 +138,13 @@ const decryptData = (data) => {
  */
 
 export const {
+    createCustomerData,
     createApplicationConfig,
     loadApplicationConfig,
+    fetchNormalPass,
     fetchNormalPassSuccess,
     fetchNormalPassFailure,
+    fetchPreferentialPass,
     fetchPreferentialPassSuccess,
     fetchPreferentialPassFailure } = queueSlice.actions;
 

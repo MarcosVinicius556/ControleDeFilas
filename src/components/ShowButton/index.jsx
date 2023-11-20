@@ -12,3 +12,5 @@ export const ShowButton = memo(() => {
     </BaseButton>
   )
 })
+
+ShowButton.displayName = "ShowButton";

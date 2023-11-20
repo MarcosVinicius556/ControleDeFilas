@@ -32,7 +32,7 @@ export const BaseButton = styled.button`
 
 const reveal = keyframes`
     from{
-        opacity: 0;
+        opacity: .5;
     }
     to{
         opacity: 1;
@@ -55,7 +55,7 @@ export const Container = styled.div`
     align-items: center;
     flex-direction: column;
 
-    /* animation: ${reveal} .9s ease-in-out; */
+    animation: ${reveal} .8s ease-in-out;
 
     box-shadow: 0px 0px 132px 38px rgba(0,0,0,0.75) inset;
     -webkit-box-shadow: 0px 0px 132px 38px rgba(0,0,0,0.75) inset;

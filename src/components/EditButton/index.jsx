@@ -12,3 +12,5 @@ export const EditButton = memo(() => {
     </BaseButton>
   )
 }) 
+
+EditButton.displayName = "AddButton";

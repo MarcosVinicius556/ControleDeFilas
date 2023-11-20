@@ -12,3 +12,5 @@ export const RemoveButton = memo(() => {
     </BaseButton>
   )
 })
+
+RemoveButton.displayName = "RemoveButton";
