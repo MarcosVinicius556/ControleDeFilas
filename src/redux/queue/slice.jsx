@@ -18,7 +18,8 @@ const initialAppState = {
         identifier: ''
     },
     applicationConfigData: null,
-    loading: false
+    loadingNormal: false,
+    loadingPref: false,
 }
 
 export const queueSlice = createSlice({
@@ -64,7 +65,7 @@ export const queueSlice = createSlice({
             console.log(action);
             return {
                 ...state,
-                loading: true
+                loadingNormal: true
             }
             
         },
@@ -74,7 +75,7 @@ export const queueSlice = createSlice({
             console.log(action);
             return {
                 ...state,
-                loading: false
+                loadingNormal: false
             }
         },
         fetchNormalPassFailure: (state, action) => {
@@ -82,7 +83,7 @@ export const queueSlice = createSlice({
             console.log(action);
             return {
                 ...state,
-                loading: false
+                loadingNormal: false
             }
         },
         fetchPreferentialPass: (state, action) => {
@@ -90,7 +91,7 @@ export const queueSlice = createSlice({
             console.log(action);
             return {
                 ...state,
-                loading: true
+                loadingPref: true
             }
         },
         fetchPreferentialPassSuccess: (state, action) => {
@@ -98,7 +99,7 @@ export const queueSlice = createSlice({
             console.log(action);
             return {
                 ...state,
-                loading: false
+                loadingPref: false
             }
         },
         fetchPreferentialPassFailure: (state, action) => {
@@ -106,7 +107,7 @@ export const queueSlice = createSlice({
             console.log(action);
             return {
                 ...state,
-                loading: false
+                loadingPref: false
             }
         }
     }

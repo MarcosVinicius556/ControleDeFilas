@@ -3,14 +3,16 @@ import { BiArrowBack } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/celio.png';
 import { Container, DeveloppedBy } from "../../styles/GlobalStyle";
-import { Form, FormCard
-} from './Config.style';
-// import { ConfigContext } from "../../context/ConfigContext";
+import { Form, FormCard } from './Config.style';
+import { useDispatch, useSelector } from 'react-redux';
+import { createApplicationConfig, loadApplicationConfig } from '../../redux/queue/slice';
 
-// eslint-disable-next-line react/display-name
 export const Config =  memo(() => {
     const [serverUrl, setServerUrl] = useState('');
     const [serverPort, setServerPort] = useState(''); 
+
+    const { applicationConfigData } = useSelector((rootReducer) => rootReducer.queue);
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
@@ -21,30 +23,19 @@ export const Config =  memo(() => {
     }
 
     useEffect(() => {
-        // const loadConfigData = () => {
+        dispatch(loadApplicationConfig());
+        /**
+         * Busca as configurações existentes no localStorage do usuário
+         */
+        setServerUrl(applicationConfigData.url);
+        setServerPort(applicationConfigData.port);
 
-        //     /**
-        //      * Busca as configurações existentes no localStorage do usuário
-        //      */
-        //     setServerUrl(state.serverUrl);
-        //     setServerPort(state.serverPort);
-
-        // }
-
-        // loadConfigData();
-
-        // console.log(state);
-    }, []);
+    }, [applicationConfigData.port, applicationConfigData.url, dispatch]);
 
     const handleSubmit = (e) => {
-        console.log(e);
-        // e.preventDefault();
-        // let configData = {
-        //     url: serverUrl,
-        //     port: serverPort
-        // }
+        e.preventDefault();
 
-        // dispatch({ type:'saveConfig', payload:configData })
+        dispatch(createApplicationConfig({url: serverUrl, port: serverPort }))
     };
     return (
         <Container>
@@ -70,6 +61,9 @@ export const Config =  memo(() => {
         </Container>
     )
 });
+
+Config.displayName = "Config";
+
 export default Config
 
 
