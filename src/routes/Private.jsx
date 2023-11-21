@@ -3,9 +3,9 @@
  */
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { loadApplicationConfig } from "../redux/queue/slice";
-import { useNavigate } from "react-router-dom";
 
 export default function Private({ children }) {
 

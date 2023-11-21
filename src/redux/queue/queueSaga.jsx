@@ -15,7 +15,7 @@ import {
     fetchPreferentialPassSuccess
 } from './slice';
 
-import axios from 'axios';
+import ISLabsService from '../../service/ISLabsService';
 
 
 /**
@@ -23,9 +23,13 @@ import axios from 'axios';
  * ao ser executada irá realizar a requisição, e em caso de sucesso ou falha, será chamado o reducer
  * para realizar o que esteja definido para a aplicação....
  */
-function* fetchNormalPass(){
+function* fetchNormalPass(action){
    try{
-        const response = yield call(axios.get());
+        let customer = action.payload;
+        console.log(customer);
+        const response = yield call(ISLabsService.post("/createatendimento", customer));
+
+        console.log(response.data);
 
         yield put(fetchNormalPassSuccess(response.data))
     } catch(error) {
@@ -33,9 +37,13 @@ function* fetchNormalPass(){
     }
 }
 
-function* fetchPreferentialPass() {
+function* fetchPreferentialPass(action) {
     try{
-        const response = yield call(axios.get());
+        let customer = action.payload;
+        console.log(customer);
+        const response = yield call(ISLabsService.post("/createatendimento", customer));
+
+        console.log(response.data);
 
         yield put(fetchPreferentialPassSuccess(response.data))
     } catch(error) {
@@ -45,7 +53,9 @@ function* fetchPreferentialPass() {
 
 function* fetchAvailableQueue() {
     try {
-        const response = yield call(axios.get());
+        const response = yield call(ISLabsService.get("/filas"));
+
+        console.log(response.data);
 
         yield put(fetchAvailableQueueSuccess(response.data))
     } catch (error) {

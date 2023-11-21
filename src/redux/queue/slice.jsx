@@ -16,7 +16,8 @@ const secretPass = 'teste';
 const initialAppState = {
     customer: {
         indetifierType: '',
-        identifier: ''
+        identifier: '',
+        queueType: 0
     },
     applicationConfigData: null,
     availableQueue: [],

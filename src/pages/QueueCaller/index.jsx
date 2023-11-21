@@ -13,7 +13,7 @@ const QueueCaller = memo(() => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loadingNormal, loadingPref } = useSelector((rootReducer) => rootReducer.queue);
+  const { customer, loadingNormal, loadingPref } = useSelector((rootReducer) => rootReducer.queue);
 
   const handleBack = (e) => {
     e.preventDefault();
@@ -22,11 +22,19 @@ const QueueCaller = memo(() => {
   }
 
   const callNormalPass = () => {
-    dispatch(fetchNormalPass());
+    let queueObj = {
+        ...customer,
+        queueType: 1
+    }
+    dispatch(fetchNormalPass(queueObj));
   }
 
   const callPreferentialPass = () => {
-    dispatch(fetchPreferentialPass());
+    let queueObj = {
+      ...customer,
+      queueType: 1
+    }
+    dispatch(fetchPreferentialPass(queueObj));
   }
 
   return (

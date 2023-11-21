@@ -7,16 +7,16 @@ import axios from "axios";
  * @returns AxiosInstance
  */
 const ISLabsService = () => {
-    let baseUrl = '';
+    let baseURL = '';
     
     useDispatch(loadApplicationConfig());
     const{ applicationConfigData } = useSelector((rootReducer) => rootReducer.queue);
 
-    baseUrl = applicationConfigData.url + '/' + applicationConfigData.port + '/';
+    baseURL = applicationConfigData.url + '/' + applicationConfigData.port + '/integracao';
 
-    console.log(baseUrl);
+    console.log(baseURL);
 
-    return axios.create({ baseUrl });
+    return axios.create({ baseURL });
 
 }
 
