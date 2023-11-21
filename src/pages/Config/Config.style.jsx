@@ -93,18 +93,39 @@ export const Form = styled.form`
         input:nth-child(4) {
             width: 40%;
         }
+        & div {
 
-        & select {
-            width: 100%;
-            height: 50%;
-            padding-left: .5em;
-            font-size: 20px;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            outline: none;
-            margin-bottom: 1em;
+            display: flex;
+
+            & select {
+                width: 100%;
+                height: 85%;
+                padding-left: .5em;
+                font-size: 20px;
+                font-family: 'Courier New', Courier, monospace;
+                font-weight: bold;
+                border: none;
+                border-radius: 5px;
+                outline: none;
+                margin-bottom: 1em;
+            }
+
+            & button {
+                margin-left: .3em;
+                width: 3em;
+                height: 85%;
+                border-radius: 5px;
+                border: none;
+                outline: none;
+                background: #71b971;
+                cursor: pointer;
+                transition: all .3s ease-in-out;
+                
+                &:hover {
+                    background: #85ce85;
+                    color: #fff;
+                }
+            }
         }
 
         

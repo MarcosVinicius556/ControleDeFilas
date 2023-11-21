@@ -1,19 +1,18 @@
-import { memo } from 'react';
 import { BiArrowBack } from 'react-icons/bi';
+import LoadingSpin from 'react-loading-spin';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/celio.png';
 import ConfigButton from "../../components/ConfigButton";
+import { fetchNormalPass, fetchPreferentialPass } from '../../redux/queue/slice';
 import { Container, DeveloppedBy } from "../../styles/GlobalStyle";
 import { ButtonNorml, ButtonPref, Card } from "./QueueCaller.style";
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchNormalPass, fetchPreferentialPass } from '../../redux/queue/slice';
-import LoadingSpin from 'react-loading-spin';
 
-const QueueCaller = memo(() => {
+const QueueCaller = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { customer, loadingNormal, loadingPref } = useSelector((rootReducer) => rootReducer.queue);
+  const { applicationConfigData, customer, loadingNormal, loadingPref } = useSelector((rootReducer) => rootReducer.queue);
 
   const handleBack = (e) => {
     e.preventDefault();
@@ -24,7 +23,8 @@ const QueueCaller = memo(() => {
   const callNormalPass = () => {
     let queueObj = {
         ...customer,
-        queueType: 1
+        queueType: 1,
+        queueId: applicationConfigData.queueId,
     }
     dispatch(fetchNormalPass(queueObj));
   }
@@ -32,7 +32,8 @@ const QueueCaller = memo(() => {
   const callPreferentialPass = () => {
     let queueObj = {
       ...customer,
-      queueType: 1
+      queueType: 1,
+      queueId: applicationConfigData.queueId,
     }
     dispatch(fetchPreferentialPass(queueObj));
   }
@@ -57,7 +58,8 @@ const QueueCaller = memo(() => {
       <ConfigButton />
     </Container>
   )
-})
+}
+
 QueueCaller.displayName = "QueueCaller";
 
 export default QueueCaller

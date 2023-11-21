@@ -1,21 +1,21 @@
-import { useState, memo, useRef } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from '../../assets/celio.png';
 
+import { IMaskInput } from "react-imask";
+import ConfigButton from "../../components/ConfigButton";
 import { Container, DeveloppedBy } from "../../styles/GlobalStyle";
 import {
     Form,
     FormCard,
-    SwitchContainer,
-    SwitchButton
+    SwitchButton,
+    SwitchContainer
 } from './CustomerIdentify.style';
-import { IMaskInput } from "react-imask";
-import ConfigButton from "../../components/ConfigButton";
 
-import { createCustomerData } from "../../redux/queue/slice";
 import { useDispatch } from "react-redux";
+import { createCustomerData } from "../../redux/queue/slice";
 
-const CustomerIdentify = memo(() => {
+const CustomerIdentify = () => {
 
         const navigate = useNavigate();
 
@@ -85,7 +85,6 @@ const CustomerIdentify = memo(() => {
             </Container>
         )
     }
-)
 
 CustomerIdentify.displayName = "CustomerIdentify";
 

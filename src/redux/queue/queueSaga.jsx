@@ -27,12 +27,13 @@ function* fetchNormalPass(action){
    try{
         let customer = action.payload;
         console.log(customer);
-        const response = yield call(ISLabsService.post("/createatendimento", customer));
+        const response = yield call(ISLabsService.post, "/filaatendimentos/createatendimento", customer);
 
         console.log(response.data);
 
         yield put(fetchNormalPassSuccess(response.data))
     } catch(error) {
+        console.log(error);
         yield put(fetchNormalPassFailure(error));
     }
 }
@@ -41,24 +42,27 @@ function* fetchPreferentialPass(action) {
     try{
         let customer = action.payload;
         console.log(customer);
-        const response = yield call(ISLabsService.post("/createatendimento", customer));
+        const response = yield call(ISLabsService.post, "/filaatendimentos/createatendimento", customer);
 
         console.log(response.data);
 
         yield put(fetchPreferentialPassSuccess(response.data))
     } catch(error) {
+        console.log(error);
         yield put(fetchPreferentialPassFailure('Olá mundo, deu errado!'));
     }
 }
 
 function* fetchAvailableQueue() {
     try {
-        const response = yield call(ISLabsService.get("/filas"));
+        console.log(ISLabsService);
+        const response = yield call(ISLabsService.get, "/filas");
 
         console.log(response.data);
 
         yield put(fetchAvailableQueueSuccess(response.data))
     } catch (error) {
+        console.log(error);
         yield put(fetchAvailableQueueFailure(error));
     }
 }

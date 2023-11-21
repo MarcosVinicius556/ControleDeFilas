@@ -1,14 +1,13 @@
-import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ButtonContainer } from './ConfigButton.style';
 
-import { GrDocumentConfig } from 'react-icons/gr'
+import { GrDocumentConfig } from 'react-icons/gr';
 
 /**
  * Utilizando ReactMemo para evitar renderizações desnecessárias em componentes 
  */
-const ConfigButton =  memo(() => {
+const ConfigButton =  () => {
 
     const navigate = useNavigate();
 
@@ -17,7 +16,7 @@ const ConfigButton =  memo(() => {
             <GrDocumentConfig size={25} color='#fff'/>
         </ButtonContainer>
     )
-})
+}
 ConfigButton.displayName = "ConfigButton";
 
 export default ConfigButton

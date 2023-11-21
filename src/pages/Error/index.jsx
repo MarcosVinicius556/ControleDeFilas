@@ -1,12 +1,11 @@
 /* eslint-disable react/display-name */
-import { memo } from 'react';
-import { Container } from '../../styles/GlobalStyle';
-import { Card } from './Error.style';
 import { BiArrowBack } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import img from '../../assets/Error.svg';
+import { Container } from '../../styles/GlobalStyle';
+import { Card } from './Error.style';
 
-const Error = memo(() => {
+const Error = () => {
 
     const navigate = useNavigate();
 
@@ -28,6 +27,5 @@ const Error = memo(() => {
       </Container>
     )
   }
-)
 
 export default Error

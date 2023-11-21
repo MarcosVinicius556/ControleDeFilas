@@ -5,10 +5,10 @@
  */
 
 import { createSlice } from '@reduxjs/toolkit';
-import CryptoJS from "crypto-js";
+import { encryptData, decryptData } from '../../service/CryptService';
 import { toast } from 'react-toastify';
 
-const secretPass = 'teste';
+
 
 /**
  * Valor inicial da aplicação...
@@ -102,7 +102,7 @@ export const queueSlice = createSlice({
             }
         },
         fetchAvailableQueueFailure: (state, action) => {
-            toast.failure('Houve um erro ao buscar as filas dinsponíveis para uso. Erro: ' + action.payload);
+            toast.error('Houve um erro ao buscar as filas dinsponíveis para uso. Erro: ' + action.payload);
             return{
                 ...state,
                 loadingConfig: false
@@ -176,27 +176,6 @@ export const queueSlice = createSlice({
         }
     }
 });
-
-/**
- * @apiNote Encrypt data for store in localStorage
- * @param {*} data 
- * @returns 
- */
-const encryptData = (data) => {
-    return CryptoJS.AES.encrypt(
-        JSON.stringify(data),
-        secretPass
-    ).toString();
-}
-
-/**
- * @apiNote Decrypt and return the value in localStorage of user
- * @param {*} data 
- * @returns 
- */
-const decryptData = (data) => {
-    return JSON.parse(CryptoJS.AES.decrypt(data, secretPass).toString(CryptoJS.enc.Utf8));
-}
 
 /**
  * Exportando todas as actions que poderão ser acessadas na aplicação

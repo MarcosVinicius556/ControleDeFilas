@@ -1,24 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
-import { loadApplicationConfig } from "../redux/queue/slice";
+import { decryptData } from './CryptService';
 import axios from "axios";
 
 /**
  * @apiNote Configurações para acesso da API
  * @returns AxiosInstance
  */
-const ISLabsService = () => {
-    let baseURL = '';
-    
-    useDispatch(loadApplicationConfig());
-    const{ applicationConfigData } = useSelector((rootReducer) => rootReducer.queue);
+let encryptedData = localStorage.getItem('@infoarteData');
+let configData = encryptedData ? decryptData(encryptedData) : {url: '', port: ''};
 
-    baseURL = applicationConfigData.url + '/' + applicationConfigData.port + '/integracao';
+const BASE_URL = configData?.url && configData?.port ?
+                `${configData.url}:${configData.port}/integracao` : '';
 
-    console.log(baseURL);
-
-    return axios.create({ baseURL });
-
-}
+const ISLabsService = axios.create({ baseURL: BASE_URL });
 
 export default ISLabsService;
 
