@@ -82,7 +82,6 @@ export const queueSlice = createSlice({
         loadApplicationConfig: (state) => {
             let encryptedData = localStorage.getItem('@infoarteData');
             let configData = encryptedData ? decryptData(encryptedData) : {url: '', port: ''};
-            
             return{
                 ...state,
                 applicationConfigData: configData

@@ -48,7 +48,7 @@ export const Container = styled.div`
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 
     display: flex;
     justify-content: center;

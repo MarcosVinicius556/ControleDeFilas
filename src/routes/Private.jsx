@@ -11,33 +11,37 @@ export default function Private({ children }) {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const{ applicationConfigData } = useSelector((rootReducer) => rootReducer.queue);
-
+    const{ applicationConfigData, loadingConfig } = useSelector((rootReducer) => rootReducer.queue);
+    
     useEffect(() => {
+
+        console.log(applicationConfigData);
+        
         dispatch(loadApplicationConfig());
      
-        if(applicationConfigData === null) {
-            toast.warn('Para utilizar a aplicação é necessário realizar a configuração!');
-            navigate('/');
-        }
-    
-        if(!applicationConfigData?.url) {
-            toast.warn('Para utilizar a aplicação é necessário configurar uma URL de acesso válida!');
-            navigate('/');
-        }
-    
-        if(!applicationConfigData?.port) {
-            toast.warn('Para utilizar a aplicação é necessário configurar uma PORTA de acesso válida!');
-            navigate('/');
-        }
-    
-        if(!applicationConfigData?.queueId) {
-            toast.warn('Para utilizar a aplicação é necessário configurar uma FILA válida!');
-            navigate('/');
+        if(loadingConfig) {
+            if(applicationConfigData === null) {
+                toast.warn('Para utilizar a aplicação é necessário realizar a configuração!');
+                navigate('/');
+            }
+        
+            if(!applicationConfigData?.url) {
+                toast.warn('Para utilizar a aplicação é necessário configurar uma URL de acesso válida!');
+                navigate('/');
+            }
+        
+            if(!applicationConfigData?.port) {
+                toast.warn('Para utilizar a aplicação é necessário configurar uma PORTA de acesso válida!');
+                navigate('/');
+            }
+        
+            if(!applicationConfigData?.queueId) {
+                toast.warn('Para utilizar a aplicação é necessário configurar uma FILA válida!');
+                navigate('/');
+            }
         }
         
-
-    }, [applicationConfigData?.url, applicationConfigData?.port, applicationConfigData?.queueId]);
+    }, [loadingConfig]);
     
 
     return children;

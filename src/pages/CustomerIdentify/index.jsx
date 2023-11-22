@@ -37,7 +37,7 @@ const CustomerIdentify = () => {
             e.preventDefault();
             
             dispatch(createCustomerData({ 
-                identifierType: !infNome ? 2 : 1,
+                identifierType: !infNome ? 1 : 2,
                 identifier: !infNome ? identifierRef.current?.maskRef?.value : identifierRef.current?.element.value,
             }));
 
@@ -73,11 +73,12 @@ const CustomerIdentify = () => {
                                             ref={identifierRef}
                                             type="text"
                                             mask="000.000.000-00" 
-                                            placeholder="Digite seu CPF..."/>
+                                            placeholder="Digite seu CPF..."
+                                            typeof="number"/>
                                     </span>
                                 )
                             }
-                            <input type="submit" value="Entrar" />
+                            <input type="submit" value="Avançar" />
                         </Form>
                         <DeveloppedBy>Desenvolvido por Infoarte Software LTDA.</DeveloppedBy>
                     </FormCard>
