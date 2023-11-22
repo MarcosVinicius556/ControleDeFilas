@@ -92,3 +92,7 @@ export const ButtonPref = styled.button`
         color: #323232;
     }
 `;
+
+export const PrintContainer = styled.div`
+    display: none;
+`;

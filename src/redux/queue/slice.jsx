@@ -5,8 +5,8 @@
  */
 
 import { createSlice } from '@reduxjs/toolkit';
-import { encryptData, decryptData } from '../../service/CryptService';
 import { toast } from 'react-toastify';
+import { decryptData, encryptData } from '../../service/CryptService';
 
 
 
@@ -21,6 +21,12 @@ const initialAppState = {
     },
     applicationConfigData: null,
     availableQueue: [],
+    queueToPrint: {
+        header: '',
+        prefix: '',
+        pass: '',
+        footer: ''
+    },
     loadingNormal: false,
     loadingPref: false,
     loadingConfig: false
@@ -125,16 +131,17 @@ export const queueSlice = createSlice({
         fetchNormalPassSuccess: (state, action) => {
 
             toast.success('Realizando impressão da senha!');
-            alert('Recebeu os dados para impressão da fila normal...');
-            console.log(action.payload);
+            let queuePrint = action.payload;
+
             return {
                 ...state,
+                queueToPrint: queuePrint,
                 loadingNormal: false
             }
         },
         fetchNormalPassFailure: (state, action) => {
 
-            toast.failure('Não foi possível realizar a comunicação com o servidor! Erro: ' + action.payload);
+            toast.error('Não foi possível realizar a comunicação com o servidor! Erro: ' + action.payload);
             
             return {
                 ...state,
@@ -157,21 +164,28 @@ export const queueSlice = createSlice({
         fetchPreferentialPassSuccess: (state, action) => {
             
             toast.success('Realizando impressão da senha preferêncial!');
-            alert('Recebeu os dados para impressão da fila preferencial...');
-            console.log(action.payload);
+            let queuePrint = action.payload;
 
+            return {
+                ...state,
+                loadingPref: false,
+                queueToPrint: queuePrint
+                
+            }
+        },
+        fetchPreferentialPassFailure: (state, action) => {
+
+            toast.error('Não foi possível realizar a comunicação com o servidor! Erro: ' + action.payload);
+        
             return {
                 ...state,
                 loadingPref: false
             }
         },
-        fetchPreferentialPassFailure: (state, action) => {
-
-            toast.failure('Não foi possível realizar a comunicação com o servidor! Erro: ' + action.payload);
-        
+        clearStates: (state) => {
+            state = initialAppState;
             return {
-                ...state,
-                loadingPref: false
+                ...state
             }
         }
     }
@@ -193,7 +207,8 @@ export const {
     fetchNormalPassFailure,
     fetchPreferentialPass,
     fetchPreferentialPassSuccess,
-    fetchPreferentialPassFailure } = queueSlice.actions;
+    fetchPreferentialPassFailure,
+    clearStates } = queueSlice.actions;
 
 /**
  * Por fim exportamos o reducer para utilizar na aplicação

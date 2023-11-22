@@ -7,8 +7,8 @@ import {
 } from 'redux-saga/effects';
 
 import {
-    fetchAvailableQueueSuccess,
     fetchAvailableQueueFailure,
+    fetchAvailableQueueSuccess,
     fetchNormalPassFailure,
     fetchNormalPassSuccess,
     fetchPreferentialPassFailure,
@@ -25,13 +25,11 @@ import ISLabsService from '../../service/ISLabsService';
  */
 function* fetchNormalPass(action){
    try{
+        console.log(action.payload);
         let customer = action.payload;
-        console.log(customer);
         const response = yield call(ISLabsService.post, "/filaatendimentos/createatendimento", customer);
 
-        console.log(response.data);
-
-        yield put(fetchNormalPassSuccess(response.data))
+        yield put(fetchNormalPassSuccess(response.data));
     } catch(error) {
         console.log(error);
         yield put(fetchNormalPassFailure(error));
@@ -41,10 +39,7 @@ function* fetchNormalPass(action){
 function* fetchPreferentialPass(action) {
     try{
         let customer = action.payload;
-        console.log(customer);
         const response = yield call(ISLabsService.post, "/filaatendimentos/createatendimento", customer);
-
-        console.log(response.data);
 
         yield put(fetchPreferentialPassSuccess(response.data))
     } catch(error) {
@@ -55,10 +50,7 @@ function* fetchPreferentialPass(action) {
 
 function* fetchAvailableQueue() {
     try {
-        console.log(ISLabsService);
         const response = yield call(ISLabsService.get, "/filas");
-
-        console.log(response.data);
 
         yield put(fetchAvailableQueueSuccess(response.data))
     } catch (error) {
